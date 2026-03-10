@@ -5402,6 +5402,7 @@
       crossorigin="anonymous"
       data-framer-es-module-shims
     ></script>
+
     <!-- Start of headStart -->
 
     <!-- End of headStart -->
@@ -6274,6 +6275,73 @@
         collectionItemId,
       }) {
         const rootPreload = routes[routeId].page.preload();
+
+        const content = React.createElement(Framer.PageRoot, {
+          isWebsite: true,
+          environment: "site",
+          routeId,
+          pathVariables,
+          routes,
+          collectionUtils,
+          framerSiteId,
+          notFoundPage: Framer.lazy(
+            () =>
+              import("https://framerusercontent.com/modules/iykOQ63KXLBobQTzkq49/XPxuWLaB798CzaUnMiiw/R8dKyYlUV.js"),
+          ),
+          isReducedMotion: undefined,
+          localeId,
+          locales,
+          preserveQueryParams: undefined,
+          siteCanonicalURL: "https://thankful-apartment-080430.framer.app",
+          EditorBar:
+            typeof window !== "undefined"
+              ? (() => {
+                  if (isBot) {
+                    console.log(
+                      "[Framer On-Page Editing] Unavailable because navigator is bot",
+                    );
+                    return;
+                  }
+
+                  return Framer.lazy(async () => {
+                    const dependencies = {
+                      __version: 3,
+                      framer: {
+                        useCurrentRoute: Framer.useCurrentRoute,
+                        useLocaleInfo: Framer.useLocaleInfo,
+                        useRouter: Framer.useRouter,
+                      },
+                      react: {
+                        createElement: React.createElement,
+                        Fragment: React.Fragment,
+                        memo: React.memo,
+                        useCallback: React.useCallback,
+                        useEffect: React.useEffect,
+                        useRef: React.useRef,
+                        useState: React.useState,
+                        useLayoutEffect: React.useLayoutEffect,
+                      },
+                      "react-dom": { createPortal },
+                    };
+
+                    window.__framer_editorBarDependencies = dependencies;
+
+                    const { createEditorBar } =
+                      await import("https://framer.com/edit/init.mjs");
+                    return {
+                      default: createEditorBar(),
+                    };
+                  });
+                })()
+              : undefined,
+          adaptLayoutToTextDirection: false,
+
+          loadSnippetsModule: new Framer.LazyValue(
+            () =>
+              import("https://framerusercontent.com/modules/ikEZCvapZBFWwVqtBK2o/1xQYUxzHMrUTRudPeuLw/snippets.js"),
+          ),
+          initialCollectionItemId: collectionItemId,
+        });
 
         const contentWithFeaturesContext = React.createElement(
           Framer.LibraryFeaturesProvider,
