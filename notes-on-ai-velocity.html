@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Notes on AI velocity — Imaan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="site.css" />
+</head>
+<body data-screen-label="Post — Notes on AI velocity">
+
+<main class="post-wrap">
+
+  <div class="crumb"><a href="writing.html" class="back-link">← Writing</a></div>
+
+  <header class="head">
+    <h1 class="h-title">Notes on AI velocity</h1>
+    <p class="h-sub">On quality, speed, and the second-order effect.</p>
+    <div class="h-topics">
+      <span class="t">Engineering</span>
+      <span class="t">Process</span>
+    </div>
+  </header>
+
+  <article class="post">
+
+    <p>
+      The promise of AI in software isn't doing more things at once — it's doing
+      one thing far better, far faster. The teams I work with care about quality
+      first; speed is the second-order effect.<a class="sn-mark" href="#sn-1" data-sn-target="1">1</a>
+    </p>
+    <aside class="sn" data-sn="1">
+      <button class="sn-toggle"><span>Note 01</span><span class="sn-toggle-icon">+</span></button>
+      <div class="sn-head">
+        <span class="sn-n">01</span>
+        <span class="sn-kind">Note</span>
+      </div>
+      <div class="sn-body">
+        <p>Speed without quality is a debt you pay down later, usually with interest.</p>
+      </div>
+    </aside>
+
+    <h2>What actually changes</h2>
+    <p>
+      Three habits flip when you have a good coding agent on your shoulder: reading
+      code in chunks, branching exploratorily, and treating drafts as throwaway by
+      default.<a class="sn-mark" href="#sn-2" data-sn-target="2">2</a>
+    </p>
+    <aside class="sn" data-sn="2">
+      <button class="sn-toggle"><span>Note 02</span><span class="sn-toggle-icon">+</span></button>
+      <div class="sn-head">
+        <span class="sn-n">02</span>
+        <span class="sn-kind">Tweet</span>
+      </div>
+      <div class="sn-body">
+        <p class="handle">@imaan</p>
+        <p class="quote">"Whenever I catch myself spawning a fifth experiment, I close my laptop and re-read the brief."</p>
+      </div>
+    </aside>
+
+    <ul>
+      <li>You read more code than you write.</li>
+      <li>You spawn 4–5 small experiments instead of one large one.</li>
+      <li>Throwaway becomes the default; commitment is the rare act.</li>
+    </ul>
+
+    <h3>A small example</h3>
+    <p>Here's a hook I rewrote last week. The agent suggested the proxy pattern; I tightened it.</p>
+
+<pre class="code"><span class="tok-k">function</span> <span class="tok-f">useTracked</span>(initial) {
+  <span class="tok-k">const</span> [, rerender] = <span class="tok-f">useState</span>({});
+  <span class="tok-k">const</span> tracked    = <span class="tok-f">useRef</span>({});
+  <span class="tok-k">const</span> state      = <span class="tok-f">useRef</span>(initial);
+
+  <span class="tok-c">// only re-render for keys that were actually read</span>
+  <span class="tok-k">return</span> <span class="tok-k">new</span> Proxy(state.current, {
+    <span class="tok-f">get</span>(_, key) {
+      tracked.current[key] = <span class="tok-k">true</span>;
+      <span class="tok-k">return</span> state.current[key];
+    },
+  });
+}</pre>
+
+    <p>
+      The trick: only re-render for keys the component actually reads.<a class="sn-mark" href="#sn-3" data-sn-target="3">3</a> The rest are noise.
+    </p>
+    <aside class="sn" data-sn="3">
+      <button class="sn-toggle"><span>Note 03</span><span class="sn-toggle-icon">+</span></button>
+      <div class="sn-head">
+        <span class="sn-n">03</span>
+        <span class="sn-kind">Link</span>
+      </div>
+      <div class="sn-body">
+        <p>Inspired by Paco Coursey's "React Hook Getter Pattern".</p>
+        <p class="url">↗ paco.me/writing/react-hook-getter</p>
+      </div>
+    </aside>
+
+    <blockquote class="pull">Quality is what you protect when you choose not to ship the second thing.</blockquote>
+
+    <h2>Measuring it</h2>
+    <p>The numbers below are rough — single-developer projects over a month. Take with salt.</p>
+
+    <table class="tbl">
+      <thead><tr><th>Project</th><th>Before</th><th>After</th><th>Δ</th></tr></thead>
+      <tbody>
+        <tr><td>Builders Log</td><td>3 wk</td><td>5 d</td><td>−76%</td></tr>
+        <tr><td>PT Module</td><td>8 wk</td><td>3 wk</td><td>−62%</td></tr>
+        <tr><td>Toolbelt</td><td>—</td><td>2 wk</td><td>n/a</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Talk demo</h3>
+    <div class="embed">Video — 16:9</div>
+
+    <p>
+      That's it. Build a few things, build them well.<a class="sn-mark" href="#sn-4" data-sn-target="4">4</a>
+    </p>
+    <aside class="sn" data-sn="4">
+      <button class="sn-toggle"><span>Note 04</span><span class="sn-toggle-icon">+</span></button>
+      <div class="sn-head">
+        <span class="sn-n">04</span>
+        <span class="sn-kind">Video</span>
+      </div>
+      <div class="sn-body">
+        <div class="embed">Video — 16:9</div>
+        <p>Demo: rewriting useTracked on stream.</p>
+      </div>
+    </aside>
+
+  </article>
+
+</main>
+
+<script src="post.js"></script>
+
+</body>
+</html>

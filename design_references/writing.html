@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Writing — Imaan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="site.css" />
+</head>
+<body data-screen-label="Writing — Index">
+
+<main class="archive">
+
+  <div class="crumb"><a href="index.html" class="back-link">← Home</a></div>
+
+  <aside class="filter">
+    <div class="eyebrow">Topics</div>
+    <div class="topics" id="topics">
+      <button class="topic" data-topic="All" aria-pressed="true"><span class="dot"></span>All</button>
+      <button class="topic" data-topic="Engineering" aria-pressed="false"><span class="dot"></span>Engineering</button>
+      <button class="topic" data-topic="Process" aria-pressed="false"><span class="dot"></span>Process</button>
+      <button class="topic" data-topic="Training" aria-pressed="false"><span class="dot"></span>Training</button>
+      <button class="topic" data-topic="Writing" aria-pressed="false"><span class="dot"></span>Writing</button>
+      <button class="topic" data-topic="Startup" aria-pressed="false"><span class="dot"></span>Startup</button>
+    </div>
+  </aside>
+
+  <section class="main">
+    <h1 class="title">Writing</h1>
+    <p class="lede">Infrequent thoughts on building, training, and the people who do both.</p>
+
+    <div class="posts" id="posts">
+      <a class="post-row" href="notes-on-ai-velocity.html" data-topics="Engineering,Process">
+        <div class="post-title">Notes on AI velocity</div>
+        <div class="post-desc">Quality first; speed is the second-order effect.</div>
+        <div class="post-meta"><span>Engineering</span><span>Process</span></div>
+      </a>
+      <a class="post-row" href="#" data-topics="Training">
+        <div class="post-title">Returning from injury</div>
+        <div class="post-desc">Six months off the pitch and the lessons of patience.</div>
+        <div class="post-meta"><span>Training</span></div>
+      </a>
+      <a class="post-row" href="#" data-topics="Engineering,Startup">
+        <div class="post-title">Builders Log, six months in</div>
+        <div class="post-desc">What turning agent transcripts into posts taught me.</div>
+        <div class="post-meta"><span>Engineering</span><span>Startup</span></div>
+      </a>
+      <a class="post-row" href="#" data-topics="Startup,Process">
+        <div class="post-title">A coaching tool for trainers</div>
+        <div class="post-desc">Designing PT Module for the long tail of personal trainers.</div>
+        <div class="post-meta"><span>Startup</span><span>Process</span></div>
+      </a>
+      <a class="post-row" href="#" data-topics="Engineering">
+        <div class="post-title">Toolbelt — a personal stack</div>
+        <div class="post-desc">The case for tools you make for an audience of one.</div>
+        <div class="post-meta"><span>Engineering</span></div>
+      </a>
+      <a class="post-row" href="#" data-topics="Startup,Writing">
+        <div class="post-title">Why abliterate.ai exists</div>
+        <div class="post-desc">Private, uncensored, yours.</div>
+        <div class="post-meta"><span>Startup</span><span>Writing</span></div>
+      </a>
+      <a class="post-row" href="#" data-topics="Engineering,Process">
+        <div class="post-title">Three habits that flipped</div>
+        <div class="post-desc">Reading code, branching cheap, throwaway by default.</div>
+        <div class="post-meta"><span>Engineering</span><span>Process</span></div>
+      </a>
+      <a class="post-row" href="#" data-topics="Writing,Process">
+        <div class="post-title">Build a few things, well</div>
+        <div class="post-desc">Saying no is the discipline.</div>
+        <div class="post-meta"><span>Writing</span><span>Process</span></div>
+      </a>
+    </div>
+
+    <div class="empty" id="empty" hidden>Nothing here under that topic — yet.</div>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  const topicsEl = document.getElementById("topics");
+  const posts    = [...document.querySelectorAll(".post-row")];
+  const empty    = document.getElementById("empty");
+
+  topicsEl.addEventListener("click", (e) => {
+    const btn = e.target.closest(".topic");
+    if (!btn) return;
+
+    [...topicsEl.children].forEach(b => b.setAttribute("aria-pressed", b === btn ? "true" : "false"));
+
+    const topic = btn.dataset.topic;
+    let visible = 0;
+    posts.forEach(p => {
+      const tags = (p.dataset.topics || "").split(",");
+      const show = topic === "All" || tags.includes(topic);
+      p.hidden = !show;
+      if (show) visible++;
+    });
+    empty.hidden = visible > 0;
+  });
+})();
+</script>
+
+</body>
+</html>
