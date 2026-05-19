@@ -71,6 +71,16 @@ li { margin: 4px 0; }
 img, video { max-width: 100%; display: block; }
 hr { border: 0; border-top: 1px solid var(--border); margin: 32px 0; }
 
+em {
+  font-family: "Newsreader", Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.2em;
+  line-height: 1;
+  letter-spacing: -0.005em;
+  font-optical-sizing: auto;
+}
+
 /* ── shared primitives ──────────────────────────────────────────────── */
 
 .eyebrow {
